@@ -64,7 +64,7 @@ static int ObserverThreadTaskIndex = 0;
         
         // Create a run loop observer and attach it to the run loop.
         CFRunLoopObserverContext  context = {0, (__bridge void *)(self), NULL, NULL, NULL};
-        CFRunLoopObserverRef observer = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopBeforeTimers, YES, 0, &myRunLoopObserver, &context);  
+        CFRunLoopObserverRef observer = CFRunLoopObserverCreate(kCFAllocatorDefault, kCFRunLoopAllActivities, YES, 0, &myRunLoopObserver, &context);
         if (observer)
         {
             CFRunLoopAddObserver(CFRunLoopGetCurrent(), observer,
@@ -76,7 +76,8 @@ static int ObserverThreadTaskIndex = 0;
             [self doOtherTask];
             BOOL ret = [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
                                                 beforeDate:[NSDate distantFuture]];
-            NSLog(@"== exiting runloop.........: %d", ret);
+            //[NSDate distantFuture];// [NSDate date];//NSDate dateWithTimeIntervalSinceNow:1
+            NSLog(@"== exiting runloop.........ret: %@", ret? @"YES":@"NO");
         }
         NSLog(@"==== finishing thread.........");
     }
